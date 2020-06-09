@@ -7,13 +7,17 @@
 <title>Create Location</title>
 </head>
 <body>
-<form action="" method="">
+<form action="saveloc" method="post">
+<pre>
 ID <input type="text" name="id"/>
 CODE <input type="text" name="code"/>
 Name <input type="text" name="name"/>
-Type:urban <input type="radio" name="type"/>
-	Rural <input type="radio" name="type"/>
+Type:urban <input type="radio" name="type" value ="URBAN"/>
+	Rural <input type="radio" name="type" value="RURAL"/>
 <input type="submit" value="save"/>
+${msg}
+<a href="displayLocation">View All</a>
+</pre>
 </form>
 </body>
 </html>
