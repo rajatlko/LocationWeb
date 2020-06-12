@@ -2,6 +2,8 @@ package com.rajat.location.controller;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.rajat.location.Entities.Location;
+import com.rajat.location.repos.LocationRepository;
 import com.rajat.location.service.LocationService;
 import com.rajat.location.util.EmailUtil;
+import com.rajat.location.util.ReportUtil;
 
 @Controller
 public class locationController {
@@ -20,6 +24,15 @@ public class locationController {
 	
 	@Autowired
 	EmailUtil emailUtil;
+	
+	@Autowired
+	LocationRepository repository;
+	
+	@Autowired
+	ReportUtil reportUtil;
+	
+	@Autowired
+	ServletContext sc;
 	
 	@RequestMapping("/showCreate")
 	public String showCreate() {
@@ -64,5 +77,13 @@ public class locationController {
 		modelMap.addAttribute("locations",locations);
 		return "displayLocation";
 		
+	}
+	@RequestMapping("/generateReport")
+	public String generateReport() {
+		String path = sc.getRealPath("/");
+		//it will give root where project is stored and there we store the jpeg file
+		List<Object[]> data = repository.findTypeAndTypeCount();
+		reportUtil.generatePieChart(path, data);
+		return "report";
 	}
 }
