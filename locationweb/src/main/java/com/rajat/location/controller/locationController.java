@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.rajat.location.Entities.Location;
 import com.rajat.location.service.LocationService;
+import com.rajat.location.util.EmailUtil;
 
 @Controller
 public class locationController {
 	@Autowired
 	LocationService service;
+	
+	@Autowired
+	EmailUtil emailUtil;
 	
 	@RequestMapping("/showCreate")
 	public String showCreate() {
@@ -29,6 +33,7 @@ public class locationController {
 		String msg="Location saved with id:"+ locationSaved.getId();
 		modelMap.addAttribute("msg", msg);
 		//this modeMap can be accessed by jsp using spring Expression language
+		emailUtil.sendEmail("rajatchaturvedi1995@gmail.com", "FOUND YOU!!", "");
 		return "createLocation"; 
 	}
 	@RequestMapping("/displayLocation")
